@@ -83,9 +83,17 @@
 <body>
   <h1 id="welcomeMessage">Welcome!</h1>
 
+  <!-- Dark Mode Toggle -->
+  <div class="toggle-container">
+    <label for="darkModeToggle">Dark Mode</label>
+    <input type="checkbox" id="darkModeToggle">
+  </div>
+
+  
   <nav>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
+    <a href="#featured">Featured</a>
     <a href="#contact">Contact</a>
   </nav>
 
@@ -94,6 +102,9 @@
     <p>Hi! I'm April. I’m a developer who enjoys working with databases, writing clean code, and building websites and applications. 
       I have experience with Python, Java, JavaScript, HTML/CSS, and C++, and I’m always learning new tools and technologies. 
       I’m especially interested in roles that combine database work with software development!</p>
+
+    <h3>Skills</h3>
+    <ul id="skillsList"></ul>
   </section>
 
   <section id="projects">
@@ -103,6 +114,25 @@
       <li><a href="https://github.com/aprtay2887.github.io/project2" target="_blank">Project Two</a></li>
       <li><a href="https://github.com/aprtay2887.github.io/project3" target="_blank">Project Three</a></li>
     </ul>
+  </section>
+
+  <!-- Featured Content Section -->
+  <section id="featured">
+    <h2>Featured Content</h2>
+
+    <div id="universityResources" style="display:none;">
+      <h3>University Resources</h3>
+      <ul>
+        <li><a href="https://www.ecpi.edu/technology" target="_blank">ECPI Technology Programs</a></li>
+        <li><a href="https://www.ecpi.edu/cybersecurity" target="_blank">Cybersecurity Programs</a></li>
+      </ul>
+    </div>
+
+    <div id="personalProjects" style="display:none;">
+      <h3>Personal Projects</h3>
+      <p>Check out some of my work on GitHub!</p>
+      <img src="https://via.placeholder.com/300x150" alt="Project Preview">
+    </div>
   </section>
 
   <section id="contact">
@@ -130,6 +160,39 @@
     if (userName) {
       document.getElementById("welcomeMessage").textContent = "Welcome, " + userName + "!";
     }
+
+    // Skills array + loop
+    const skills = ["HTML", "CSS", "JavaScript", "Python", "Git", "GitHub"];
+    const skillsList = document.getElementById("skillsList");
+
+    skills.forEach(skill => {
+      const li = document.createElement("li");
+      li.textContent = skill;
+      skillsList.appendChild(li);
+    });
+
+    // Conditional logic for Featured Content
+    const projectCount = document.querySelectorAll("#projectList li").length;
+
+    if (projectCount >= 3) {
+      document.getElementById("personalProjects").style.display = "block";
+    } else {
+      document.getElementById("universityResources").style.display = "block";
+    }
+
+    // Dark Mode Toggle
+    const toggle = document.getElementById("darkModeToggle");
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    // Form Submit Interactivity
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nameInput = document.getElementById("senderName").value;
+      alert("Thank you, " + nameInput + ", your message has been sent!");
+    });
   </script>
 </body>
 </html>
