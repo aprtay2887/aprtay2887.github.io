@@ -248,6 +248,94 @@ body.dark-mode ul li a {
       const nameInput = document.getElementById("senderName").value;
       alert("Thank you, " + nameInput + ", your message has been sent!");
     });
+
+    // Prompt user for their name and personalize the welcome message
+  var userName = prompt("What's your name?");
+  if (userName) {
+    document.getElementById("welcomeMessage").textContent = "Welcome, " + userName + "!";
+  }
+
+  // Skills array + loop
+  const skills = ["HTML", "CSS", "JavaScript", "Python", "Git", "GitHub", "SQL", "Database Design"];
+  const skillsList = document.getElementById("skillsList");
+
+  skills.forEach(skill => {
+    const li = document.createElement("li");
+    li.textContent = skill;
+    skillsList.appendChild(li);
+  });
+
+  // Conditional logic for Featured Content
+  const projectCount = document.querySelectorAll("#projectList li").length;
+
+  if (projectCount >= 3) {
+    document.getElementById("personalProjects").style.display = "block";
+  } else {
+    document.getElementById("universityResources").style.display = "block";
+  }
+
+  // Dark Mode Toggle
+  const toggle = document.getElementById("darkModeToggle");
+  toggle.addEventListener("change", () => {
+    document.body.classList.toggle("dark-mode");
+  });
+
+   // Dynamically Add a New Section / Message
+  // Add a new paragraph to the Projects section
+  const newProjectInfo = document.createElement("p");
+  newProjectInfo.textContent =
+    "✨ New Update: I'm currently working on a JavaScript + MongoDB data visualization project!";
+  newProjectInfo.style.marginTop = "15px";
+  newProjectInfo.style.fontStyle = "italic";
+  document.getElementById("projects").appendChild(newProjectInfo);
+
+  // Add a notification banner after a delay
+  setTimeout(() => {
+    const banner = document.createElement("div");
+    banner.textContent = "🚀 Portfolio Update: New features have been added!";
+    banner.style.backgroundColor = "#2a4d69";
+    banner.style.color = "white";
+    banner.style.padding = "12px";
+    banner.style.borderRadius = "6px";
+    banner.style.marginBottom = "20px";
+    banner.style.textAlign = "center";
+    banner.style.fontWeight = "600";
+    document.body.prepend(banner);
+  }, 2000);
+
+   // Modify Existing Elements Using Selectors
+  // Change About Me heading text
+  const aboutHeading = document.querySelector("#about h2");
+  aboutHeading.textContent = "About the Developer";
+
+  // Add border + styling to Featured section
+  const featured = document.getElementById("featured");
+  featured.style.border = "2px solid #2a4d69";
+  featured.style.borderRadius = "8px";
+  featured.style.padding = "20px";
+
+  // Timed Confirmation
+  document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Remove old status message if it exists
+    const oldStatus = document.getElementById("statusMessage");
+    if (oldStatus) oldStatus.remove();
+
+    // Create loading message
+    const status = document.createElement("p");
+    status.id = "statusMessage";
+    status.textContent = "Sending message...";
+    status.style.color = "#2a4d69";
+    status.style.fontWeight = "600";
+    this.appendChild(status);
+
+    // Replace with confirmation after delay
+    setTimeout(() => {
+      status.textContent = "Message sent successfully!";
+      status.style.color = "green";
+    }, 2500);
+  });    
   </script>
 </body>
 </html>
