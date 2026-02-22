@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Portfolio</title>
+
   <style>
     body {
       margin: 0;
@@ -62,76 +63,129 @@
       font-weight: 600;
       cursor: pointer;
       margin-top: 10px;
+      position: relative;
     }
 
     button:hover {
       background-color: #1f3a50;
     }
 
-    ul li a {
-      color: #2a4d69;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    ul li a:hover {
-      text-decoration: underline;
+    /* Tooltip */
+    button:hover::after {
+      content: "Click to send your message!";
+      position: absolute;
+      top: -35px;
+      left: 0;
+      background: #2a4d69;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      white-space: nowrap;
     }
 
     /* Dark Mode */
-     body.dark-mode {
-  background-color: #111;
-  color: #f2f2f2;
-}
+    body.dark-mode {
+      background-color: #111;
+      color: #f2f2f2;
+    }
 
-/* Headings */
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3 {
-  color: #c9e1ff;
-}
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3 {
+      color: #c9e1ff;
+    }
 
-/* Navigation */
-body.dark-mode nav {
-  background-color: #0d2538;
-}
+    body.dark-mode nav {
+      background-color: #0d2538;
+    }
 
-body.dark-mode nav a {
-  color: #ffffff;
-}
+    body.dark-mode nav a {
+      color: #ffffff;
+    }
 
-/* Sections */
-body.dark-mode section {
-  background-color: #1c1c1c;
-  box-shadow: 0 2px 6px rgba(255,255,255,0.08);
-}
+    body.dark-mode section {
+      background-color: #1c1c1c;
+      box-shadow: 0 2px 6px rgba(255,255,255,0.08);
+    }
 
-/* Form Inputs */
-body.dark-mode input,
-body.dark-mode textarea {
-  background-color: #2a2a2a;
-  color: #f2f2f2;
-  border: 1px solid #555;
-}
+    body.dark-mode input,
+    body.dark-mode textarea {
+      background-color: #2a2a2a;
+      color: #f2f2f2;
+      border: 1px solid #555;
+    }
 
-/* Buttons */
-body.dark-mode button {
-  background-color: #0d2538;
-  color: #fff;
-}
+    body.dark-mode button {
+      background-color: #0d2538;
+      color: #fff;
+    }
 
-body.dark-mode button:hover {
-  background-color: #091a28;
-}
+    body.dark-mode button:hover {
+      background-color: #091a28;
+    }
 
-/* Links inside lists */
-body.dark-mode ul li a {
-  color: #9cc4ff;
-}
+    body.dark-mode ul li a {
+      color: #9cc4ff;
+    }
 
+    /* Modal Overlay */
+    #welcomeModalOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    /* Modal Box */
+    #welcomeModal {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    body.dark-mode #welcomeModal {
+      background: #1c1c1c;
+      color: #f2f2f2;
+    }
+
+    #closeModalBtn {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      background: #2a4d69;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #closeModalBtn:hover {
+      background: #1f3a50;
+    }
   </style>
 </head>
+
 <body>
+
+  <!-- Welcome Modal -->
+  <div id="welcomeModalOverlay">
+    <div id="welcomeModal">
+      <h3>This page is a work in progress</h3>
+      <p>Thanks for stopping by! Feel free to explore.</p>
+      <button id="closeModalBtn">Close</button>
+    </div>
+  </div>
+
   <h1 id="welcomeMessage">Welcome!</h1>
 
   <!-- Dark Mode Toggle -->
@@ -140,7 +194,6 @@ body.dark-mode ul li a {
     <input type="checkbox" id="darkModeToggle">
   </div>
 
-  
   <nav>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
@@ -149,10 +202,8 @@ body.dark-mode ul li a {
   </nav>
 
   <section id="about">
-    <h2>About Me</h2>
-    <p>Hi! I'm April. I’m a developer who enjoys working with databases, writing clean code, and building websites and applications. 
-      I have experience with Python, Java, JavaScript, HTML/CSS, and C++, and I’m always learning new tools and technologies. 
-      I’m especially interested in roles that combine database work with software development!</p>
+    <h2>About the Developer</h2>
+    <p>Hi! I'm April. I’m a developer who enjoys working with databases, writing clean code, and building websites and applications.</p>
 
     <h3>Skills</h3>
     <ul id="skillsList"></ul>
@@ -167,7 +218,6 @@ body.dark-mode ul li a {
     </ul>
   </section>
 
-  <!-- Featured Content Section -->
   <section id="featured">
     <h2>Featured Content</h2>
 
@@ -189,30 +239,33 @@ body.dark-mode ul li a {
   <section id="contact">
     <h2>Contact Me</h2>
     <form id="contactForm">
-      <label for="senderName">Name:</label><br />
-      <input type="text" id="senderName" name="senderName" /><br /><br />
+      <label for="senderName">Name:</label>
+      <input type="text" id="senderName" name="senderName" />
 
-      <label for="email">Email:</label><br />
-      <input type="email" id="email" name="email" /><br /><br />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" />
 
-      <label for="subject">Subject:</label><br />
-      <input type="text" id="subject" name="subject" /><br /><br />
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" name="subject" />
 
-      <label for="message">Message:</label><br />
-      <textarea id="message" name="message"></textarea><br /><br />
+      <label for="message">Message:</label>
+      <textarea id="message" name="message"></textarea>
 
       <button type="submit">Submit</button>
     </form>
   </section>
 
   <script>
-    // Prompt user for their name and personalize the welcome message
-    var userName = prompt("What's your name?");
-    if (userName) {
-      document.getElementById("welcomeMessage").textContent = "Welcome, " + userName + "!";
-    }
+    /* -------------------------
+       Welcome Modal
+    ------------------------- */
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+      document.getElementById("welcomeModalOverlay").style.display = "none";
+    });
 
-    // Skills array + loop
+    /* -------------------------
+       Skills List
+    ------------------------- */
     const skills = ["HTML", "CSS", "JavaScript", "Python", "Git", "GitHub", "SQL", "Database Design"];
     const skillsList = document.getElementById("skillsList");
 
@@ -222,7 +275,9 @@ body.dark-mode ul li a {
       skillsList.appendChild(li);
     });
 
-    // Conditional logic for Featured Content
+    /* -------------------------
+       Featured Content Logic
+    ------------------------- */
     const projectCount = document.querySelectorAll("#projectList li").length;
 
     if (projectCount >= 3) {
@@ -231,109 +286,73 @@ body.dark-mode ul li a {
       document.getElementById("universityResources").style.display = "block";
     }
 
-    // Dark Mode Toggle
+    /* -------------------------
+       Dark Mode Persistence
+    ------------------------- */
     const toggle = document.getElementById("darkModeToggle");
+
+    // Load saved preference
+    if (localStorage.getItem("darkMode") === "enabled") {
+      document.body.classList.add("dark-mode");
+      toggle.checked = true;
+    }
+
     toggle.addEventListener("change", () => {
       document.body.classList.toggle("dark-mode");
+
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("darkMode", "enabled");
+      } else {
+        localStorage.removeItem("darkMode");
+      }
     });
 
-    // Form Submit Interactivity
+    /* -------------------------
+       Contact Form Interactivity
+    ------------------------- */
     document.getElementById("contactForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const nameInput = document.getElementById("senderName").value;
-      alert("Thank you, " + nameInput + ", your message has been sent!");
+      const oldStatus = document.getElementById("statusMessage");
+      if (oldStatus) oldStatus.remove();
+
+      const status = document.createElement("p");
+      status.id = "statusMessage";
+      status.textContent = "Sending message...";
+      status.style.color = "#2a4d69";
+      status.style.fontWeight = "600";
+      this.appendChild(status);
+
+      setTimeout(() => {
+        status.textContent = "Message sent successfully!";
+        status.style.color = "green";
+      }, 2500);
     });
 
-    // Prompt user for their name and personalize the welcome message
-  var userName = prompt("What's your name?");
-  if (userName) {
-    document.getElementById("welcomeMessage").textContent = "Welcome, " + userName + "!";
-  }
+    /* -------------------------
+       Dynamic Updates
+    ------------------------- */
+    const newProjectInfo = document.createElement("p");
+    newProjectInfo.textContent =
+      "New Update: I'm currently working on a JavaScript + MongoDB data visualization project!";
+    newProjectInfo.style.marginTop = "15px";
+    newProjectInfo.style.fontStyle = "italic";
+    document.getElementById("projects").appendChild(newProjectInfo);
 
-  // Skills array + loop
-  const skills = ["HTML", "CSS", "JavaScript", "Python", "Git", "GitHub", "SQL", "Database Design"];
-  const skillsList = document.getElementById("skillsList");
-
-  skills.forEach(skill => {
-    const li = document.createElement("li");
-    li.textContent = skill;
-    skillsList.appendChild(li);
-  });
-
-  // Conditional logic for Featured Content
-  const projectCount = document.querySelectorAll("#projectList ul li").length;
-
-  if (projectCount >= 3) {
-    document.getElementById("personalProjects").style.display = "block";
-  } else {
-    document.getElementById("universityResources").style.display = "block";
-  }
-
-  // Dark Mode Toggle
-  const toggle = document.getElementById("darkModeToggle");
-  toggle.addEventListener("change", () => {
-    document.body.classList.toggle("dark-mode");
-  });
-
-   // Dynamically Add a New Section / Message
-  // Add a new paragraph to the Projects section
-  const newProjectInfo = document.createElement("p");
-  newProjectInfo.textContent =
-    "New Update: I'm currently working on a JavaScript + MongoDB data visualization project!";
-  newProjectInfo.style.marginTop = "15px";
-  newProjectInfo.style.fontStyle = "italic";
-  document.getElementById("projects").appendChild(newProjectInfo);
-
-  // Add a notification banner after a delay
-  setTimeout(() => {
-    const banner = document.createElement("div");
-    banner.textContent = "Portfolio Update: New features have been added!";
-    banner.style.backgroundColor = "#2a4d69";
-    banner.style.color = "white";
-    banner.style.padding = "12px";
-    banner.style.borderRadius = "6px";
-    banner.style.marginBottom = "20px";
-    banner.style.textAlign = "center";
-    banner.style.fontWeight = "600";
-    document.body.prepend(banner);
-  }, 2000);
-
-   // Modify Existing Elements Using Selectors
-  // Change About Me heading text
-  const aboutHeading = document.querySelector("#about h2");
-  aboutHeading.textContent = "About the Developer";
-
-  // Add border + styling to Featured section
-  const featured = document.getElementById("featured");
-  featured.style.border = "2px solid #2a4d69";
-  featured.style.borderRadius = "8px";
-  featured.style.padding = "20px";
-
-  // Timed Confirmation
-  document.getElementById("contactForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    // Remove old status message if it exists
-    const oldStatus = document.getElementById("statusMessage");
-    if (oldStatus) oldStatus.remove();
-
-    // Create loading message
-    const status = document.createElement("p");
-    status.id = "statusMessage";
-    status.textContent = "Sending message...";
-    status.style.color = "#2a4d69";
-    status.style.fontWeight = "600";
-    this.appendChild(status);
-
-    // Replace with confirmation after delay
     setTimeout(() => {
-      status.textContent = "Message sent successfully!";
-      status.style.color = "green";
-    }, 2500);
-  });    
+      const banner = document.createElement("div");
+      banner.textContent = "Portfolio Update: New features have been added!";
+      banner.style.backgroundColor = "#2a4d69";
+      banner.style.color = "white";
+      banner.style.padding = "12px";
+      banner.style.borderRadius = "6px";
+      banner.style.marginBottom = "20px";
+      banner.style.textAlign = "center";
+      banner.style.fontWeight = "600";
+      document.body.prepend(banner);
+    }, 2000);
   </script>
+
 </body>
 </html>
-
 
