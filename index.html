@@ -211,11 +211,7 @@
 
   <section id="projects">
     <h2>Projects</h2>
-    <ul id="projectList">
-      <li><a href="https://github.com/aprtay2887.github.io/project1" target="_blank">Project One</a></li>
-      <li><a href="https://github.com/aprtay2887.github.io/project2" target="_blank">Project Two</a></li>
-      <li><a href="https://github.com/aprtay2887.github.io/project3" target="_blank">Project Three</a></li>
-    </ul>
+    <ul id="projectList"></ul>
   </section>
 
   <section id="featured">
@@ -351,6 +347,56 @@
       banner.style.fontWeight = "600";
       document.body.prepend(banner);
     }, 2000);
+
+    /* Dynamic Project Objects */
+
+    // Define project objects
+    const projectData = [
+      {
+        title: "JavaScript Portfolio",
+        summary: "A clean, interactive portfolio built using HTML, CSS, and JavaScript.",
+        image: "https://via.placeholder.com/120",
+        repo: "https://github.com/aprtay2887.github.io/project1"
+      },
+      {
+        title: "MongoDB Visualization",
+        summary: "A data visualization tool using MongoDB queries and dynamic charts.",
+        image: "https://via.placeholder.com/120",
+        repo: "https://github.com/aprtay2887.github.io/project2"
+      },
+      {
+        title: "Python Automation Scripts",
+        summary: "A collection of Python scripts for workflow automation and data processing.",
+        image: "https://via.placeholder.com/120",
+        repo: "https://github.com/aprtay2887.github.io/project3"
+      }
+    ];
+    
+    // Store in sessionStorage if not already stored
+    if (!sessionStorage.getItem("projects")) {
+      sessionStorage.setItem("projects", JSON.stringify(projectData));
+    }
+    
+    // Retrieve and parse
+    const storedProjects = JSON.parse(sessionStorage.getItem("projects"));
+    
+    // Render dynamically
+    const projectList = document.getElementById("projectList");
+    
+    storedProjects.forEach(project => {
+      const li = document.createElement("li");
+    
+      li.innerHTML = `
+        <img src="${project.image}" alt="${project.title}" style="width:80px; border-radius:6px; margin-right:10px;">
+        <strong>${project.title}</strong><br>
+        <em>${project.summary}</em><br>
+        <a href="${project.repo}" target="_blank">View Repository</a>
+      `;
+    
+      li.style.marginBottom = "20px";
+      projectList.appendChild(li);
+    });
+
   </script>
 
 </body>
